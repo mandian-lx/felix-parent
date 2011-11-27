@@ -1,6 +1,6 @@
 Name:           felix-parent
 Version:        1.2.1
-Release:        5
+Release:        7
 Summary:        Parent POM file for Apache Felix Specs
 
 Group:          Development/Java
