@@ -1,0 +1,15 @@
+--- pom.xml.orig	2009-09-22 15:16:43.000000000 +0800
++++ pom.xml	2010-07-19 11:39:09.000000000 +0800
+@@ -202,12 +202,6 @@
+       <version>2.4</version>
+       <scope>test</scope>
+     </dependency>
+-    <dependency>
+-      <groupId>org.mockito</groupId>
+-      <artifactId>mockito-all</artifactId>
+-      <version>1.7</version>
+-      <scope>test</scope>
+-    </dependency>
+   </dependencies>
+   <build>
+     <pluginManagement>
