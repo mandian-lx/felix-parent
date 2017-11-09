@@ -1,16 +1,23 @@
 %{?_javapackages_macros:%_javapackages_macros}
+
 Name:           felix-parent
 Version:        2.1
-Release:        3.1%{?dist}
+Release:        13.1
 Summary:        Parent POM file for Apache Felix Specs
 License:        ASL 2.0
+Group:          Development/Java
 URL:            http://felix.apache.org/
 Source0:        http://repo1.maven.org/maven2/org/apache/felix/felix-parent/%{version}/%{name}-%{version}-source-release.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mockito
-BuildRequires:  maven-site-plugin
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(org.mockito:mockito-all)
+
+# FIXME auto-requires are not generated
+Requires: easymock
+Requires: mockito
 
 %description
 Parent POM file for Apache Felix Specs.
@@ -19,8 +26,12 @@ Parent POM file for Apache Felix Specs.
 %setup -q -n felix-parent-%{version}
 %mvn_alias : :felix
 %pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :maven-release-plugin
 %pom_remove_plugin org.codehaus.mojo:ianal-maven-plugin
 %pom_remove_plugin :apache-rat-plugin
+
+# wagon ssh dependency unneeded
+%pom_xpath_remove pom:extensions
 
 %build
 %mvn_build
@@ -32,6 +43,36 @@ Parent POM file for Apache Felix Specs.
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Feb 23 2017 Mikolaj Izdebski <mizdebsk@redhat.com> - 2.1-13
+- Regenerate build-requires
+
+* Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.1-12
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
+* Thu Feb 02 2017 Michael Simacek <msimacek@redhat.com> - 2.1-11
+- Remove BR on site-plugin and release-plugin
+
+* Wed Jun 15 2016 Mikolaj Izdebski <mizdebsk@redhat.com> - 2.1-10
+- Add missing requires
+
+* Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 2.1-9
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
+* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.1-8
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
+* Thu Apr 09 2015 Michael Simacek <msimacek@redhat.com> - 2.1-7
+- Add BR maven-release-plugin
+
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.1-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
+* Wed May 28 2014 Mikolaj Izdebski <mizdebsk@redhat.com> - 2.1-5
+- Rebuild to regenerate Maven auto-requires
+
+* Wed Mar 05 2014 Stanislav Ochotnicky <sochotnicky@redhat.com> - 2.1-4
+- Remove build extensions from pom
+
 * Mon Aug 5 2013 Krzysztof Daniel <kdaniel@redhat.com> 2.1-3
 - Remove apache-rat-plugin.
 
@@ -84,3 +125,4 @@ Parent POM file for Apache Felix Specs.
 
 * Fri Jul 16 2010 Hui Wang <huwang@redhat.com> - 1.2.1-1
 - Initial version of the package
+
